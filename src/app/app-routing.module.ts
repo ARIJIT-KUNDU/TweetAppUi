@@ -5,13 +5,14 @@ import { ListsComponent } from './lists/lists.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { TweetsComponent } from './tweets/tweets.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'members',component:MemberListComponent},
   {path:'members/:id',component:MemberDetailComponent},
   {path:'lists',component:ListsComponent},
-  {path:'tweets',component:TweetsComponent},
+  {path:'tweets',component:TweetsComponent,canActivate:[AuthGuard]},
   {path:'**',component:HomeComponent,pathMatch:'full'}
 ];
 
