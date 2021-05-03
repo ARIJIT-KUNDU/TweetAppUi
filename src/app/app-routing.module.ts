@@ -8,12 +8,20 @@ import { TweetsComponent } from './tweets/tweets.component';
 import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
-  {path:'members',component:MemberListComponent},
-  {path:'members/:id',component:MemberDetailComponent},
-  {path:'lists',component:ListsComponent},
-  {path:'tweets',component:TweetsComponent,canActivate:[AuthGuard]},
-  {path:'**',component:HomeComponent,pathMatch:'full'}
+  { path: '', component: HomeComponent },
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'members', component: MemberListComponent },
+      { path: 'members/:id', component: MemberDetailComponent },
+      { path: 'lists', component: ListsComponent },
+      { path: 'tweets', component: TweetsComponent },
+    ]
+  },
+  
+  { path: '**', component: HomeComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

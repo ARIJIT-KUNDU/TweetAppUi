@@ -1,4 +1,11 @@
+import { Tweet } from './tweet';
+
 export interface User{
-    username:string;
-    token:string;
+    firstname:string;
+    lastname:string;
+    email:string;
+    loginid:string;
+    password:string;
+    contactnumber:number;
+    tweets:Tweet[];
 }

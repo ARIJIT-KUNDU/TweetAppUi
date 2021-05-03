@@ -17,6 +17,7 @@ import { ListsComponent } from './lists/lists.component';
 import { TweetsComponent } from './tweets/tweets.component';
 import { ToastrModule } from 'ngx-toastr';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,8 @@ import { ToastrModule } from 'ngx-toastr';
     MemberListComponent,
     MemberDetailComponent,
     ListsComponent,
-    TweetsComponent
+    TweetsComponent,
+   
   ],
   imports: [
     BrowserModule,
