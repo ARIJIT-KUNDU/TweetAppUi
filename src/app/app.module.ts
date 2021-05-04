@@ -16,6 +16,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { TweetsComponent } from './tweets/tweets.component';
 import { ToastrModule } from 'ngx-toastr';
+import { MemberCardComponent } from './members/member-card/member-card.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
     MemberDetailComponent,
     ListsComponent,
     TweetsComponent,
+    MemberCardComponent,
    
   ],
   imports: [

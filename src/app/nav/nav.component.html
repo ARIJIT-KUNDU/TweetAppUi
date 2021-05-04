@@ -8,7 +8,7 @@
                 <div class="flex-column">
                     <div class="d-flex justify-content-between">
                         <ul class="navbar-nav mr-auto mb-2 mb-md-0" >
-                            <ng-container *ngIf="(accountService.currentUser$|async)">
+                            <ng-container *ngIf="(accountService.currentUser$|async)===null">
                                 <li class="nav-item">
                                     <a class="nav-link " routerLink='/tweets' routerLinkActive="active">Tweets</a>
                                 </li>

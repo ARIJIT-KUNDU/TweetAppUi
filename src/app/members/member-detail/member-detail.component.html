@@ -1,1 +1,18 @@
-<p>member-detail works!</p>
+<div class="row" *ngIf="member">
+    <div class="col-4">
+        <div class="card">
+            <img src="https://th.bing.com/th/id/R298c2c03e96791c1d3e4b5d9e5962d5b?rik=C2EraAXbT0myQA&riu=http%3a%2f%2fweneedfun.com%2fwp-content%2fuploads%2f2016%2f07%2fCool-And-Sweet-Stylish-Girls-Emo-Profile-Pictures-9.jpg&ehk=xz6FyyzAczQb4zy97RVnPk1xDYdKWG%2bum6gvSqgaNcY%3d&risl=&pid=ImgRaw" alt="{{member.loginid}}" class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <form  #postTweetForm="ngForm"
+                            (ngSubmit)="post()" autocomplete="off">
+                            <textarea name="description" [(ngModel)]="model.description" class="form-control mr-2" 
+                                placeholder="New Tweet"></textarea>
+                            
+                            <button class="btn btn-success" type="submit">Post Tweet</button>
+                            
+                        </form>
+
+            </div>
+        </div>
+    </div>
+</div>
