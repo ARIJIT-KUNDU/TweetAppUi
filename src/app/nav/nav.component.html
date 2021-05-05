@@ -8,7 +8,7 @@
                 <div class="flex-column">
                     <div class="d-flex justify-content-between">
                         <ul class="navbar-nav mr-auto mb-2 mb-md-0" >
-                            <ng-container *ngIf="(accountService.currentUser$|async)===null">
+                            <ng-container *ngIf="(accountService.currentUser$|async)">
                                 <li class="nav-item">
                                     <a class="nav-link " routerLink='/tweets' routerLinkActive="active">Tweets</a>
                                 </li>
@@ -21,7 +21,7 @@
 
 
                         </ul>
-                        <div class="dropdown" *ngIf="(accountService.currentUser$|async)===null as user" dropdown>
+                        <div class="dropdown" *ngIf="(accountService.currentUser$|async) as user" dropdown>
                             <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username}}</a>
                             <div class="dropdown-menu mt-3" *dropdownMenu>
                                 <a class="dropdown-item">Reset Password</a>

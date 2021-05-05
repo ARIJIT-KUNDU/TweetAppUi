@@ -9,20 +9,20 @@ import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'members', component: MemberListComponent },
-  { path: 'members/:loginid', component: MemberDetailComponent },
+
   {
     path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      
-      
+      { path: 'members', component: MemberListComponent },
+      { path: 'members/:loginid', component: MemberDetailComponent },
+
       { path: 'lists', component: ListsComponent },
       { path: 'tweets', component: TweetsComponent },
     ]
   },
-  
+
   { path: '**', component: HomeComponent, pathMatch: 'full' }
 ];
 

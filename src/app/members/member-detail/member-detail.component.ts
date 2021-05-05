@@ -20,6 +20,7 @@ export class MemberDetailComponent implements OnInit {
   }
   loadMember(){
     this.memberService.getMember(this.route.snapshot.paramMap.get('loginid')).subscribe(member=>{
+      
       this.member=member;
     })
   }

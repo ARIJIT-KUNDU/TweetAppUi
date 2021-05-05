@@ -1,6 +1,7 @@
 export interface Tweet{
     id:number;
-    title:string;
-    description:string;
+    
+    message:string;
+    createdOn:Date;
     appUserId:number;
 }
