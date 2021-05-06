@@ -17,6 +17,7 @@ import { ListsComponent } from './lists/lists.component';
 import { TweetsComponent } from './tweets/tweets.component';
 import { ToastrModule } from 'ngx-toastr';
 import { MemberCardComponent } from './members/member-card/member-card.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { MemberCardComponent } from './members/member-card/member-card.component
     ListsComponent,
     TweetsComponent,
     MemberCardComponent,
+    ProfileComponent,
    
   ],
   imports: [

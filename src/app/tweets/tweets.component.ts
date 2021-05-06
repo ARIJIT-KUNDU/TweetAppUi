@@ -4,6 +4,7 @@ import { MembersService } from '../_services/members.service';
 import { ActivatedRoute } from '@angular/router';
 import { Tweet } from '../_models/tweet';
 import { TweetsService } from '../_services/tweets.service';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-tweets',
@@ -13,10 +14,13 @@ import { TweetsService } from '../_services/tweets.service';
 export class TweetsComponent implements OnInit {
   @Input() member:User;
   tweets:Tweet[];
+  
   constructor(private memberService:MembersService,private route:ActivatedRoute,private tweetService:TweetsService) { }
 
   ngOnInit(): void {
     this.loadMember();
+    this.loadTweet();
+    
   }
   loadMember(){
     this.memberService.getMember(this.route.snapshot.paramMap.get('loginid')).subscribe(member=>{

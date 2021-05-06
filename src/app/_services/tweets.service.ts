@@ -12,4 +12,7 @@ export class TweetsService {
   getTweets(memberId:number){
     return this.http.get<Tweet[]>(this.baseUrl+'tweets/'+memberId);
   }
+  addTweet(message:string,id:number){
+    return this.http.post(this.baseUrl+'tweets/'+id+'/add',message);
+  }
 }

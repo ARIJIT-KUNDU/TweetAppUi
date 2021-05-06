@@ -7,14 +7,14 @@
         </div>
     </div>
     <div class="col-8">
-        <form #postTweetForm="ngForm" (ngSubmit)="post()" autocomplete="off">
-            <textarea name="description" [(ngModel)]="model.description" class="form-control mr-2"
+        <form #postTweetForm="ngForm" (ngSubmit)="post(model)" autocomplete="off">
+            <textarea name="description" [(ngModel)]="model.message" class="form-control mr-2"
                 placeholder="New Tweet"></textarea>
 
             <button class="btn btn-success" type="submit">Post Tweet</button>
 
         </form>
-        <app-tweets [member]="member"></app-tweets>
+        
     </div>
 
 </div>
