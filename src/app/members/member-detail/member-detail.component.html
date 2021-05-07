@@ -7,14 +7,21 @@
         </div>
     </div>
     <div class="col-8">
-        <form #postTweetForm="ngForm" (ngSubmit)="post(model)" autocomplete="off">
-            <textarea name="description" [(ngModel)]="model.message" class="form-control mr-2"
-                placeholder="New Tweet"></textarea>
-
+        <form [formGroup]="newTweetForm" (ngSubmit)="post(model)" autocomplete="off">
+            <textarea [class.is-invalid]="newTweetForm.get('message').errors && newTweetForm.get('message').touched"
+                formControlName="message" class="form-control mr-2" placeholder="Message"></textarea>
+            <div *ngIf="newTweetForm.get('message').hasError('required')" class="invalid-feedback">Please enter a tweet
+            </div>
+            <div *ngIf="newTweetForm.get('message').hasError('maxlength')" class="invalid-feedback">Tweet should not go
+                beyond 144 characters</div>
+            <textarea name="tag" [class.is-invalid]="newTweetForm.get('tag').errors && newTweetForm.get('tag').touched"
+                formControlName="tag" class="form-control mr-2" placeholder="Tag"></textarea>
+            <div *ngIf="newTweetForm.get('tag').hasError('maxlength')" class="invalid-feedback">Tag should not go beyond
+                50 characters</div>
             <button class="btn btn-success" type="submit">Post Tweet</button>
 
         </form>
-        
+        <app-tweets [member]="member"></app-tweets>
     </div>
 
 </div>

@@ -4,8 +4,9 @@ import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
-import { TweetsComponent } from './tweets/tweets.component';
+import { TweetsComponent } from './tweet/tweets/tweets.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { EditTweetComponent } from './tweet/edit-tweet/edit-tweet.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,6 +21,8 @@ const routes: Routes = [
 
       { path: 'lists', component: ListsComponent },
       { path: 'tweets', component: TweetsComponent },
+      { path: 'tweet/edit', component: EditTweetComponent },
+
     ]
   },
 

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { User } from '../_models/user';
-import { MembersService } from '../_services/members.service';
+import { User } from '../../_models/user';
+import { MembersService } from '../../_services/members.service';
 import { ActivatedRoute } from '@angular/router';
-import { Tweet } from '../_models/tweet';
-import { TweetsService } from '../_services/tweets.service';
-import { AccountService } from '../_services/account.service';
+import { Tweet } from '../../_models/tweet';
+import { TweetsService } from '../../_services/tweets.service';
+import { AccountService } from '../../_services/account.service';
 
 @Component({
   selector: 'app-tweets',

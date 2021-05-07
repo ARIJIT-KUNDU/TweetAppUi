@@ -4,6 +4,7 @@ import { MembersService } from 'src/app/_services/members.service';
 import { ActivatedRoute } from '@angular/router';
 import { Tweet } from 'src/app/_models/tweet';
 import { TweetsService } from 'src/app/_services/tweets.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-member-detail',
@@ -12,12 +13,14 @@ import { TweetsService } from 'src/app/_services/tweets.service';
 })
 export class MemberDetailComponent implements OnInit {
   member:User;
-  model:Tweet;
+  model:any={};
   tweets:Tweet[];
-  constructor(private memberService:MembersService,private route:ActivatedRoute,private tweetService:TweetsService) { }
+  newTweetForm:FormGroup;
+  constructor(private memberService:MembersService,private route:ActivatedRoute,private tweetService:TweetsService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
     this.loadMember();
+    this.initializeForm();
   }
   loadMember(){
     this.memberService.getMember(this.route.snapshot.paramMap.get('loginid')).subscribe(member=>{
@@ -30,8 +33,11 @@ export class MemberDetailComponent implements OnInit {
       console.log(result);
     })
   }
-  getTweets(memberId:number){
-    
+  initializeForm(){
+    this.newTweetForm=this.fb.group({
+      message:['',[Validators.required,Validators.maxLength(144)]],
+      tag:['',Validators.maxLength(50)]
+    })
   }
 
 }
