@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/_models/user';
 import { MembersService } from 'src/app/_services/members.service';
+import { AccountService } from 'src/app/_services/account.service';
+import { Route } from '@angular/compiler/src/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-member-list',
@@ -9,13 +12,16 @@ import { MembersService } from 'src/app/_services/members.service';
 })
 export class MemberListComponent implements OnInit {
   members:User[];
-  constructor(private memberService:MembersService) { }
+  currentUser:any;
+  constructor(private memberService:MembersService,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.loadMembers();
+    this.currentUser=JSON.parse(localStorage.user);
+    
+    this.loadMembers(this.currentUser.loginId);
   }
-  loadMembers(){
-    this.memberService.getMembers().subscribe(members=>{
+  loadMembers(loginId:string){
+    this.memberService.getOtherMembers(loginId).subscribe(members=>{
       this.members=members;
       console.log(members);
     })

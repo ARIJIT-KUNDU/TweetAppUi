@@ -16,11 +16,13 @@ export class MemberDetailComponent implements OnInit {
   model:any={};
   tweets:Tweet[];
   newTweetForm:FormGroup;
+  loginId:string;
   constructor(private memberService:MembersService,private route:ActivatedRoute,private tweetService:TweetsService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
     this.loadMember();
     this.initializeForm();
+    this.loginId=JSON.parse(localStorage.getItem('user')).loginId;
   }
   loadMember(){
     this.memberService.getMember(this.route.snapshot.paramMap.get('loginid')).subscribe(member=>{
