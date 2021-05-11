@@ -17,17 +17,21 @@ export class MemberDetailComponent implements OnInit {
   tweets:Tweet[];
   newTweetForm:FormGroup;
   loginId:string;
+  editProfileForm:FormGroup;
   constructor(private memberService:MembersService,private route:ActivatedRoute,private tweetService:TweetsService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
     this.loadMember();
-    this.initializeForm();
+    this.initializeNewTweetForm();
     this.loginId=JSON.parse(localStorage.getItem('user')).loginId;
+    this.initializeEditProfileForm();
   }
   loadMember(){
+    console.log(this.route.snapshot.paramMap.get('loginid'));
     this.memberService.getMember(this.route.snapshot.paramMap.get('loginid')).subscribe(member=>{
       
       this.member=member;
+      console.log(this.member);
     })
   }
   post(newTweet:Tweet){
@@ -35,11 +39,24 @@ export class MemberDetailComponent implements OnInit {
       console.log(result);
     })
   }
-  initializeForm(){
+  initializeNewTweetForm(){
     this.newTweetForm=this.fb.group({
       message:['',[Validators.required,Validators.maxLength(144)]],
       tag:['',Validators.maxLength(50)]
     })
   }
 
+  saveChanges(){}
+  cancel(){}
+  initializeEditProfileForm(){
+    this.editProfileForm=this.fb.group({
+      firstname:[this.member.firstname,Validators.required],
+      lastname:[this.member.lastname,Validators.required],
+      email:[this.member.email,[Validators.required,Validators.email]],
+      loginid:[this.member.loginid],
+      password:[this.member.password],
+      
+      contactNumber:[this.member.contactnumber,[Validators.required,Validators.pattern("^[0-9]*$")]]
+    })
+  }
 }

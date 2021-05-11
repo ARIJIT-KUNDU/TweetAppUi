@@ -21,7 +21,7 @@ export class TweetsComponent implements OnInit {
   ngOnInit(): void {
     this.loadMember();
     this.loadTweet();
-    this.loginId=JSON.parse(localStorage.user.loginId);
+    this.loginId=JSON.parse(localStorage.user).loginId;
     console.log(this.loginId);
   }
   loadMember() {

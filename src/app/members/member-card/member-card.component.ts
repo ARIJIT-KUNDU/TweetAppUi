@@ -8,11 +8,12 @@ import { User } from 'src/app/_models/user';
   styleUrls: ['./member-card.component.css']
 })
 export class MemberCardComponent implements OnInit {
-  @Input() member:User;
+  @Input() member:any;
  
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.member);
   }
   
 }

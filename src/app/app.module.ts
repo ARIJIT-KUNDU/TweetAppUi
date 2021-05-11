@@ -18,6 +18,7 @@ import { TweetsComponent } from './tweet/tweets/tweets.component';
 import { ToastrModule } from 'ngx-toastr';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ProfileComponent } from './profile/profile.component';
     TweetsComponent,
     MemberCardComponent,
     ProfileComponent,
+    ResetPasswordComponent,
    
   ],
   imports: [

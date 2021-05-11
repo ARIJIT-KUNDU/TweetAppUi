@@ -11,7 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
-  members:User[];
+  members:any;
   currentUser:any;
   constructor(private memberService:MembersService,private route:ActivatedRoute) { }
 
@@ -23,7 +23,7 @@ export class MemberListComponent implements OnInit {
   loadMembers(loginId:string){
     this.memberService.getOtherMembers(loginId).subscribe(members=>{
       this.members=members;
-      console.log(members);
+      console.log(this.members);
     })
   }
 

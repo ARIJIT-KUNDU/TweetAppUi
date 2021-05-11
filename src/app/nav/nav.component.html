@@ -14,7 +14,7 @@
                                     <a class="nav-link " routerLink='/members' routerLinkActive="active">All Users</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link " routerLink='/members/{{model.username}}' routerLinkActive="active">Post Tweet</a>
+                                    <a class="nav-link " [routerLink]='["/members",currentUser.loginId]' routerLinkActive="active">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
                                     <a routerLink='/lists' routerLinkActive="active" class="nav-link">Lists</a>
@@ -26,9 +26,9 @@
 
                         </ul>
                         <div class="dropdown" *ngIf="(accountService.currentUser$|async) as user" dropdown>
-                            <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.loginid}}</a>
+                            <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.loginId}}</a>
                             <div class="dropdown-menu mt-3" *dropdownMenu>
-                                <a class="dropdown-item">Reset Password</a>
+                                <a class="dropdown-item" (click)="resetPassword()">Reset Password</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" (click)="logout()">Logout</a>
                             </div>

@@ -45,4 +45,7 @@ export class AccountService {
       })
     )
   }
+  resetPassword(model:any){
+    return this.http.get(this.baseUrl+'/'+this.currentUser$.subscribe(user=>user.loginid)+'/forgot');
+  }
 }

@@ -7,6 +7,7 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { TweetsComponent } from './tweet/tweets/tweets.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { EditTweetComponent } from './tweet/edit-tweet/edit-tweet.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,7 +19,7 @@ const routes: Routes = [
     children: [
       { path: 'members', component: MemberListComponent },
       { path: 'members/:loginid', component: MemberDetailComponent },
-
+      {path:'members/resetPassword',component:ResetPasswordComponent},
       { path: 'lists', component: ListsComponent },
       { path: 'tweets', component: TweetsComponent },
       { path: 'tweet/edit', component: EditTweetComponent },
