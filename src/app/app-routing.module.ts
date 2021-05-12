@@ -19,7 +19,7 @@ const routes: Routes = [
     children: [
       { path: 'members', component: MemberListComponent },
       { path: 'members/:loginid', component: MemberDetailComponent },
-      {path:'members/resetPassword',component:ResetPasswordComponent},
+      {path:'resetPassword',component:ResetPasswordComponent},
       { path: 'lists', component: ListsComponent },
       { path: 'tweets', component: TweetsComponent },
       { path: 'tweet/edit', component: EditTweetComponent },

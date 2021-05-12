@@ -24,8 +24,8 @@ export class ResetPasswordComponent implements OnInit {
       confirmCurrentPassword:['',[Validators.required,this.matchValues('currentPassword')]],
       newPassword:['',Validators.required]
     })
-    this.resetPasswordForm.controls.password.valueChanges.subscribe(()=>{
-      this.resetPasswordForm.controls.confirmPassword.updateValueAndValidity();
+    this.resetPasswordForm.controls.currentPassword.valueChanges.subscribe(()=>{
+      this.resetPasswordForm.controls.confirmCurrentPassword.updateValueAndValidity();
     })
   }
   matchValues(matchTo:string):ValidatorFn{

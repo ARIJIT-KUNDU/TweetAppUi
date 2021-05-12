@@ -13,7 +13,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class MemberListComponent implements OnInit {
   members:any;
   currentUser:any;
-  constructor(private memberService:MembersService,private route:ActivatedRoute) { }
+  constructor(private memberService:MembersService,private route:ActivatedRoute,private router:Router) { 
+    router.routeReuseStrategy.shouldReuseRoute=function(){
+      return false;
+    }
+  }
 
   ngOnInit(): void {
     this.currentUser=JSON.parse(localStorage.user);

@@ -12,7 +12,8 @@ export class AccountService {
   baseUrl=environment.apiUrl;
   private currentUserSource=new ReplaySubject<User>(1);
   currentUser$=this.currentUserSource.asObservable();
-
+  currentUserLoginId=JSON.parse(localStorage.getItem('user')).loginId;
+  
   constructor(private http:HttpClient) { }
   login(model:any){
     return this.http.post(this.baseUrl+'account/login',model).pipe(
@@ -46,6 +47,7 @@ export class AccountService {
     )
   }
   resetPassword(model:any){
-    return this.http.get(this.baseUrl+'/'+this.currentUser$.subscribe(user=>user.loginid)+'/forgot');
+    console.log(model);
+    return this.http.post(this.baseUrl+'Users/'+this.currentUserLoginId+'/forgot',model);
   }
 }

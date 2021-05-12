@@ -13,7 +13,9 @@ import { AccountService } from '../_services/account.service';
 export class NavComponent implements OnInit {
   model:any={};
   currentUser:any;
-  constructor(public accountService:AccountService,private router:Router,private toastr:ToastrService) { }
+  constructor(public accountService:AccountService,private router:Router,private toastr:ToastrService) {
+   
+   }
 
   ngOnInit(): void {
     this.currentUser=JSON.parse(localStorage.getItem('user'));
@@ -32,8 +34,6 @@ export class NavComponent implements OnInit {
     this.accountService.logout();
     this.router.navigateByUrl('/');
   }
-  resetPassword(){
-    this.router.navigateByUrl('/members/resetPassword');
-  }
+  
 
 }
