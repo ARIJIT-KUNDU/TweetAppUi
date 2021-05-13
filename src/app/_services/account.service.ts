@@ -37,17 +37,13 @@ export class AccountService {
   register(model:any){
     
     return this.http.post(this.baseUrl+'account/register',model).pipe(
-      map((user:User)=>{
-        if(user){
-          console.log(user);
-          localStorage.setItem('user',JSON.stringify(user));
-          this.currentUserSource.next(user);
-        }
-      })
+      map(user=>user=JSON.parse(JSON.stringify(user)))
     )
   }
   resetPassword(model:any){
     console.log(model);
-    return this.http.post(this.baseUrl+'Users/'+this.currentUserLoginId+'/forgot',model);
+    var response= this.http.post(this.baseUrl+'Users/'+this.currentUserLoginId+'/forgot',model).pipe();
+    console.log(response);
+    return response;
   }
 }

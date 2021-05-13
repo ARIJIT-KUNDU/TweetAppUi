@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
   
   @Output() cancelRegister=new EventEmitter();
   
+  
   registerForm:FormGroup;
   validationErrors:string[]=[];
 
@@ -41,11 +42,14 @@ export class RegisterComponent implements OnInit {
     }
   }
   register(){
-    
+    console.log(this.registerForm.value);
     this.accountService.register(this.registerForm.value).subscribe(response=>{
       console.log(response);
-      this.router.navigateByUrl('/members');
+      this.router.navigateByUrl('/');
+      this.toastr.success("Registration Successfull");
+      this.registerForm.reset();
     },error=>{
+      console.log(error);
       this.validationErrors=error;
       this.toastr.error(error.error);
     })

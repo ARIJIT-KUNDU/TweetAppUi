@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Tweet } from 'src/app/_models/tweet';
 import { TweetsService } from 'src/app/_services/tweets.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-member-detail',
@@ -18,7 +19,8 @@ export class MemberDetailComponent implements OnInit {
   newTweetForm: FormGroup;
   loginId: string;
   editProfileForm: FormGroup;
-  constructor(private memberService: MembersService, private route: ActivatedRoute, private tweetService: TweetsService, private fb: FormBuilder,private router:Router) { 
+  submitted:boolean;
+  constructor(private memberService: MembersService, private route: ActivatedRoute, private tweetService: TweetsService, private fb: FormBuilder,private router:Router,private toastr:ToastrService) { 
     router.routeReuseStrategy.shouldReuseRoute=function(){
       return false;
     }
@@ -38,9 +40,22 @@ export class MemberDetailComponent implements OnInit {
       console.log(this.member);
     })
   }
-  post(newTweet: Tweet) {
-    this.tweetService.addTweet(newTweet.message, newTweet.appUserId).subscribe(result => {
-      console.log(result);
+  post() {
+    this.submitted=true;
+    if(this.newTweetForm.invalid){
+      return;
+    }
+    const userId=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user")).id;
+    
+    const tweet={
+      message:this.newTweetForm.value.message,
+      tag:this.newTweetForm.value.tag,
+      appUserId:userId
+    }
+    this.tweetService.addTweet(tweet, tweet.appUserId).subscribe(result => {
+      if(tweet){
+        this.toastr.success("Tweet posted successfully.")
+      }
     })
   }
   initializeNewTweetForm() {

@@ -9,7 +9,7 @@
             data-target="#editProfileModal">Edit Profile</button>
     </div>
     <div class="col-8">
-        <form [formGroup]="newTweetForm" (ngSubmit)="post(model)" autocomplete="off" *ngIf="member.loginId===loginId">
+        <form [formGroup]="newTweetForm" (ngSubmit)="post()" autocomplete="off" *ngIf="member.loginId===loginId">
             <textarea [class.is-invalid]="newTweetForm.get('message').errors && newTweetForm.get('message').touched"
                 formControlName="message" class="form-control mr-2" placeholder="Message"></textarea>
             <div *ngIf="newTweetForm.get('message').hasError('required')" class="invalid-feedback">Please enter a tweet

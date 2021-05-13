@@ -27,18 +27,25 @@ export class ResetPasswordComponent implements OnInit {
     this.resetPasswordForm.controls.currentPassword.valueChanges.subscribe(()=>{
       this.resetPasswordForm.controls.confirmCurrentPassword.updateValueAndValidity();
     })
+    console.log(this.resetPasswordForm);
   }
+  
   matchValues(matchTo:string):ValidatorFn{
     return (control:AbstractControl)=>{
       return control?.value===control?.parent?.controls[matchTo].value?null:{isMatching:true}
     }
   }
   resetPassword(){
-    
-    this.accountService.resetPassword(this.resetPasswordForm.value).subscribe(response=>{
+    const user={
+      oldPassword:this.resetPasswordForm.value.currentPassword,
+      newPassword:this.resetPasswordForm.value.newPassword
+    }
+    this.accountService.resetPassword(user).subscribe(response=>{
       console.log(response);
       this.router.navigateByUrl('members/:loginid');
+      this.toastr.success("Successfully reset Password");
     },error=>{
+      console.log(error);
       this.validationErrors=error;
       this.toastr.error(error.error);
     })

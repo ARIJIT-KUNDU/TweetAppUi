@@ -7,6 +7,6 @@ export interface User{
     email:string;
     loginid:string;
     password:string;
-    contactnumber:number;
+    contactnumber:string;
     tweets?:Tweet[];
 }
