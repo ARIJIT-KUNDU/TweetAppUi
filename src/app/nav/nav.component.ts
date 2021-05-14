@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-nav',
@@ -13,6 +14,7 @@ import { AccountService } from '../_services/account.service';
 export class NavComponent implements OnInit {
   model:any={};
   currentUser:any;
+  
   constructor(public accountService:AccountService,private router:Router,private toastr:ToastrService) {
    
    }
@@ -20,11 +22,11 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser=JSON.parse(localStorage.getItem('user'));
   }
-  login(){
+  login(loginForm:NgForm){
     console.log(this.model);
     this.accountService.login(this.model).subscribe(response=>{
       this.router.navigateByUrl('/members/'+this.model.username);
-      
+      loginForm.resetForm();
     },error=>{
       console.log(error);
       this.toastr.error(error.error);

@@ -7,6 +7,7 @@ import { TweetsService } from '../../_services/tweets.service';
 import { AccountService } from '../../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-tweets',
@@ -23,7 +24,8 @@ export class TweetsComponent implements OnInit {
   user:any;
   comments:any;
   displayNoCommentsData:string;
-  constructor(private memberService: MembersService, private route: ActivatedRoute, private tweetService: TweetsService, private toastr: ToastrService,private fb:FormBuilder) { }
+  replyMode=false;
+  constructor(private memberService: MembersService, private route: ActivatedRoute, private tweetService: TweetsService, private toastr: ToastrService,private fb:FormBuilder,private location:Location) { }
 
   ngOnInit(): void {
     this.loadMember();
@@ -31,18 +33,24 @@ export class TweetsComponent implements OnInit {
     this.loginId=JSON.parse(localStorage.user).loginId;
     console.log(this.loginId);
     this.initializeAddCommentForm();
+    this.displayNoCommentsData="true";
+    
   }
   loadMember() {
     this.memberService.getMember(this.route.snapshot.paramMap.get('loginid')).subscribe(member => {
 
-      this.member = member;
-      console.log(member);
+      this.member= member;
+      console.log(this.member.userId);
     })
   }
   loadTweet() {
-    this.tweetService.getTweets(this.member.id).subscribe(tweets => {
+    this.tweetService.getTweets(this.member.userId).subscribe(tweets => {
       this.tweets = tweets;
       console.log(this.tweets);
+      this.tweets.forEach(tweet=>{
+        console.log(tweet);
+        this.getTweetCommentsById(tweet.id);
+      })
     })
   }
   addLike(tweet: Tweet) {
@@ -56,7 +64,7 @@ export class TweetsComponent implements OnInit {
       tags:['']
     })
   }
-  addComments(tweetId:number){
+  addComments(tweetId:string){
     const loginId=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user")).loginId;
     this.submitted=true;
     if(this.addCommentForm.invalid){
@@ -69,9 +77,10 @@ export class TweetsComponent implements OnInit {
       username:loginId
     }
     
-    this.tweetService.addComment(userComment,userComment.username).subscribe(()=>this.getTweetById(tweetId))
+    this.tweetService.addComment(userComment,userComment.username).subscribe(()=>this.getTweetById(tweetId));
+    this.replyMode=!this.replyMode;
   }
-  private getTweetById(tweetId : number)
+  private getTweetById(tweetId : string)
   {
     const userId = JSON.parse(localStorage.getItem("user")).loginId;
     this.tweetService.getTweetById(tweetId, userId ).subscribe(data=>
@@ -99,19 +108,28 @@ export class TweetsComponent implements OnInit {
         //     }
         //     console.log(isPresent);
         // });
-
-        this.tweetService.getTweetCommentsById(tweetId).subscribe(data=>
-        {
-            this.comments = data; 
-            console.log(this.comments.length);
-            if(this.comments.length > 0)
-            {
-              this.displayNoCommentsData = "true";
-            }
-            else{
-              this.displayNoCommentsData = "false"
-            }
-        });                                                                                                                                                                                                                                                           
+        this.getTweetCommentsById(tweetId);
+                                                                                                                                                                                                                                                                   
+    });
+  }
+  getTweetCommentsById(tweetId:string){
+    this.tweetService.getTweetCommentsById(tweetId).subscribe(data=>
+      {
+          this.comments = data; 
+          console.log(this.comments);
+          if(this.comments.length > 0)
+          {
+            this.displayNoCommentsData = "true";
+          }
+          else{
+            this.displayNoCommentsData = "false"
+          }
+      });
+  }
+  deleteTweet(id:any,username:string){
+    this.tweetService.deleteTweet(id,username).subscribe(()=>{
+      this.ngOnInit();
+      this.toastr.success("Tweet deleted successfully");
     });
   }
 }

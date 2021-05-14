@@ -16,7 +16,7 @@ const routes: Routes = [
       {path:'resetPassword',component:ResetPasswordComponent},
       { path: 'lists', component: ListsComponent },
       { path: 'tweets', component: TweetsComponent },
-      { path: 'tweet/edit', component: EditTweetComponent },
+      { path: 'tweet/edit/:tweetId', component: EditTweetComponent },
   // {
   //   path: '',
   //   runGuardsAndResolvers: 'always',

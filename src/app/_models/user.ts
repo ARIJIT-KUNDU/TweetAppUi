@@ -1,7 +1,7 @@
 import { Tweet } from './tweet';
 
 export interface User{
-    id?:number;
+    userId:string;
     firstname:string;
     lastname:string;
     email:string;

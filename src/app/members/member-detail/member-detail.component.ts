@@ -45,7 +45,7 @@ export class MemberDetailComponent implements OnInit {
     if(this.newTweetForm.invalid){
       return;
     }
-    const userId=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user")).id;
+    const userId=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user")).userId;
     
     const tweet={
       message:this.newTweetForm.value.message,
@@ -54,7 +54,9 @@ export class MemberDetailComponent implements OnInit {
     }
     this.tweetService.addTweet(tweet, tweet.appUserId).subscribe(result => {
       if(tweet){
-        this.toastr.success("Tweet posted successfully.")
+        this.toastr.success("Tweet posted successfully.");
+        this.newTweetForm.reset();
+        this.loadMember();
       }
     })
   }

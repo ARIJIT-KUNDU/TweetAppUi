@@ -17,7 +17,7 @@ export class MembersService {
   getMember(loginid:string){
     return this.http.get<User>(this.baseUrl+'users/search/'+loginid)
   }
-  addLike(tweetId:number){
+  addLike(tweetId:string){
     return this.http.post(this.baseUrl+'likes/'+tweetId,{})
   }
   getLikes(predicate:string){
@@ -25,5 +25,8 @@ export class MembersService {
   }
   getOtherMembers(loginId:string){
     return this.http.get<User[]>(this.baseUrl+'users/getOtherUsers/'+loginId);
+  }
+  getUserById(userId:string){
+    return this.http.get<User>(this.baseUrl+'users/getUserById/'+userId)
   }
 }
