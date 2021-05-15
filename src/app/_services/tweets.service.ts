@@ -41,4 +41,12 @@ export class TweetsService {
   public deleteTweet(id:any,username:string){
     return this.http.delete(this.baseUrl+'tweets/'+username+'/delete/'+id);
   }
+  public addLike(userLike:any,username:string,id:string){
+    return this.http.post(this.baseUrl+'likes/'+username+'/like/'+id,userLike).pipe(
+      map(data1=>data1=JSON.parse(JSON.stringify(data1)))
+    )
+  }
+  public getTweetLikesById(tweetId:string){
+    return this.http.get(this.baseUrl+'likes/GetTweetLikesByTweetId/'+tweetId);
+  }
 }

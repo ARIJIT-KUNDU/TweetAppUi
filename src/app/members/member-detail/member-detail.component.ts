@@ -54,6 +54,7 @@ export class MemberDetailComponent implements OnInit {
     }
     this.tweetService.addTweet(tweet, tweet.appUserId).subscribe(result => {
       if(tweet){
+        //this.tweets.push(result);
         this.toastr.success("Tweet posted successfully.");
         this.newTweetForm.reset();
         this.loadMember();

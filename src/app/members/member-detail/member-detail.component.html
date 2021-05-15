@@ -5,8 +5,7 @@
                 alt="{{member.loginid}}" class="card-img-top img-thumbnail">
 
         </div>
-        <button class="btn btn-primary mt-3 btn-block" type="button" data-toggle="modal"
-            data-target="#editProfileModal">Edit Profile</button>
+        
     </div>
     <div class="col-8">
         <form [formGroup]="newTweetForm" (ngSubmit)="post()" autocomplete="off" *ngIf="member.loginId===loginId">
@@ -30,75 +29,3 @@
     </div>
 
 </div>
-<!-- Modal -->
-<!-- <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="#editProfileModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]='editProfileForm' (ngSubmit)="editProfileForm.valid && saveChanges()"
-                    autocomplete="off">
-
-
-                    <div class="form-group">
-                        <input
-                            [class.is-invalid]='editProfileForm.get("firstname").errors && editProfileForm.get("firstname").touched'
-                            type="text" class="form-control" formControlName='firstname' placeholder="First Name">
-                        <div class="invalid-feedback">Please enter a first name</div>
-                    </div>
-                    <div class="form-group">
-                        <input
-                            [class.is-invalid]='editProfileForm.get("lastname").errors && editProfileForm.get("lastname").touched'
-                            type="text" class="form-control" formControlName='lastname' placeholder="Last Name">
-                        <div class="invalid-feedback">Please enter a last name</div>
-                    </div>
-                    <div class="form-group">
-                        <input
-                            [class.is-invalid]='editProfileForm.get("email").errors && editProfileForm.get("email").touched'
-                            type="email" class="form-control" formControlName='email' placeholder="Email">
-                        <div *ngIf="editProfileForm.get('email').hasError('required')" class="invalid-feedback">Please
-                            enter an email</div>
-                        <div *ngIf="editProfileForm.get('email').hasError('email')" class="invalid-feedback">Email must
-                            be valid</div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" formControlName='loginid' placeholder="Login Id" readonly>
-
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" formControlName='password' placeholder="Password" readonly>
-
-                    </div>
-
-                    <div class="form-group">
-                        <input
-                            [class.is-invalid]='editProfileForm.get("contactNumber").errors && editProfileForm.get("contactNumber").touched'
-                            type="tel" class="form-control" formControlName='contactNumber'
-                            placeholder="Contact Number">
-                        <div *ngIf="editProfileForm.get('contactNumber').hasError('required')" class="invalid-feedback">
-                            Please enter a contact number</div>
-                        <div *ngIf="editProfileForm.get('contactNumber').hasError('pattern')" class="invalid-feedback">
-                            Contact number is not valid</div>
-                    </div>
-                    
-                    <div class="form-group text-center">
-                        <button [disabled]='!editProfileForm.valid' class="btn btn-success mr-2"
-                            type="submit">Save Change</button>
-                        <button class="btn btn-default mr-2" (click)="cancel()" type="button">Cancel</button>
-                    </div>
-                </form>
-                arijit
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div> -->

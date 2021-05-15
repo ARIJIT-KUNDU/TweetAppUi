@@ -40,15 +40,15 @@ export class ResetPasswordComponent implements OnInit {
       oldPassword:this.resetPasswordForm.value.currentPassword,
       newPassword:this.resetPasswordForm.value.newPassword
     }
-    // this.accountService.resetPassword(user).subscribe(response=>{
-    //   console.log(response);
-    //   this.router.navigateByUrl('members/:loginid');
-    //   this.toastr.success("Successfully reset Password");
-    // },error=>{
-    //   console.log(error);
-    //   this.validationErrors=error;
-    //   this.toastr.error(error.error);
-    // })
+    this.accountService.resetPassword(user).subscribe(response=>{
+      console.log(response);
+      this.router.navigateByUrl('members/:loginid');
+      this.toastr.success("Successfully reset Password");
+    },error=>{
+      console.log(error);
+      this.validationErrors=error;
+      this.toastr.error(error.error);
+    })
     
   }
   cancel(){

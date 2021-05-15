@@ -6,4 +6,7 @@ export interface Tweet{
     createdOn:Date;
     appUserId:number;
     replies?:Tweet[]
+    tweetId:string;
+    likeId:string;
+    likesCount:number;
 }

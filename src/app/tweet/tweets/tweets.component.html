@@ -20,17 +20,27 @@
                     </div>
                     <div class="row">
                         <div class="col-6" *ngIf="member.loginId!==loginId">
-                            <button class="btn btn-info" (click)="replyMode=!replyMode">Reply</button>
+                            <button class="btn btn-info" (click)="replytoTweet(tweet.tweetId)">Reply</button>
                         </div>
                         <div class="col-6" *ngIf="member.loginId===loginId">
-                            <button class="btn btn-info" [routerLink]="['/tweet/edit',tweet.tweetId]">Edit Tweet</button>
+                            <button class="btn btn-info" [routerLink]="['/tweet/edit',tweet.tweetId]">Edit
+                                Tweet</button>
                         </div>
                         <div class="col-6" *ngIf="member.loginId!==loginId">
-                            <button (click)="addLike(tweet)" class="btn btn-primary"><i
-                                    class="fa fa-heart"></i></button>
+                            <div *ngIf="liked">
+                                <button (click)="toggle('unlike',tweet.tweetId,tweet.likeId)" class="btn btn-primary"><i
+                                        class="fas fa-heart"></i></button><span
+                                    class="badge badge-secondary badge-pill">{{tweet.likesCount}}</span>
+                            </div>
+                            <div *ngIf="!liked">
+                                <button (click)="toggle('like',tweet.tweetId)" class="btn btn-primary"><i
+                                        class="fa fa-heart"></i></button><span class="badge badge-secondary badge-pill">{{tweet.likesCount}}</span>
+                            </div>
+
                         </div>
                         <div class="col-6" *ngIf="member.loginId===loginId">
-                            <button class="btn btn-danger" (click)="deleteTweet(tweet.tweetId,loginId)">Delete Tweet</button>
+                            <button class="btn btn-danger" (click)="deleteTweet(tweet.tweetId,loginId)">Delete
+                                Tweet</button>
                         </div>
                     </div>
                 </div>
@@ -40,18 +50,13 @@
         <div class="row">
             <div class="form" id="{{tweet.id}}">
                 <div class="d-flex" *ngIf="replyMode">
-                    <!-- <div *ngIf="liked">
-                        <button class="btn btn-primary" (click)="toggle('unlike', tweet.tweetId, tweet.likeId)"  id="liked"><i class="fas fa-heart"></i></button>   {{tweet.likesCount}}
-                    </div>
-                    <div *ngIf="!liked">
-                        <button class="btn  btn-primary" (click)="toggle('like',tweet.tweetId)" id="unlike"><i class="far fa-heart"></i></button> {{tweet.likesCount}}
-                    </div> -->
+
                     <div class="ml-auto">
                         <i class="far fa-comment"></i>{{tweet.commentsCount}}
                     </div>
                 </div>
-                <div class="my-4" *ngIf="replyMode">
-                    <form class="d-inline" [formGroup]="addCommentForm" (ngSubmit)="addComments(tweet.id)">
+                <div class="my-4" *ngIf="replyTweet==tweet.tweetId">
+                    <form class="d-inline" [formGroup]="addCommentForm" (ngSubmit)="addComments(tweet.tweetId)">
                         <div class="d-flex">
                             <div class="messageComment">
                                 <textarea class="form-control task-textarea" rows="1" formControlName="comments"

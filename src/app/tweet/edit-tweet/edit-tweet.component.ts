@@ -57,7 +57,7 @@ export class EditTweetComponent implements OnInit {
     }
     this.tweetservice.updateTweet(tweet, this.user.loginId).subscribe(data => {
       if (data == "Tweet updated") {
-        this.router.navigate(['..']);
+        this.router.navigate(['members/'+JSON.parse(localStorage.getItem("user")).loginId]);
         this.toastr.success("Tweet updated successfully");
       }
       else {

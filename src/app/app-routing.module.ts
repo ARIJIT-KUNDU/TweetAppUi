@@ -12,20 +12,20 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'members', component: MemberListComponent },
+      
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
+    children: [
       { path: 'members/:loginid', component: MemberDetailComponent },
       {path:'resetPassword',component:ResetPasswordComponent},
       { path: 'lists', component: ListsComponent },
       { path: 'tweets', component: TweetsComponent },
       { path: 'tweet/edit/:tweetId', component: EditTweetComponent },
-  // {
-  //   path: '',
-  //   runGuardsAndResolvers: 'always',
-  //   canActivate: [AuthGuard],
-  //   children: [
-      
 
-  //   ]
-  // },
+    ]
+  },
 
   { path: '**', component: HomeComponent, pathMatch: 'full' }
 ];
