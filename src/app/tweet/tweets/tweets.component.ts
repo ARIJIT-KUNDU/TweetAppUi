@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { User } from '../../_models/user';
 import { MembersService } from '../../_services/members.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
   templateUrl: './tweets.component.html',
   styleUrls: ['./tweets.component.css']
 })
-export class TweetsComponent implements OnInit {
+export class TweetsComponent implements OnInit,OnChanges {
   @Input() member: User;
   tweets: Tweet[];
   loginId:string;
@@ -28,16 +28,22 @@ export class TweetsComponent implements OnInit {
   liked:boolean;
   likes:any=[];
   replyTweet:string;
+  likeTweet:string;
+  userId = JSON.parse(localStorage.getItem("user")).userId;
+  
   constructor(private memberService: MembersService, private route: ActivatedRoute, private tweetService: TweetsService, private toastr: ToastrService,private fb:FormBuilder,private location:Location) { }
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    this.loadTweet();
+  }
 
   ngOnInit(): void {
     this.loadMember();
     this.loadTweet();
     this.loginId=JSON.parse(localStorage.user).loginId;
-    console.log(this.loginId);
+    console.log(this.tweets);
     this.initializeAddCommentForm();
     this.displayNoCommentsData="true";
-    this.liked=false;
+    
   }
   loadMember() {
     this.memberService.getMember(this.route.snapshot.paramMap.get('loginid')).subscribe(member => {
@@ -51,8 +57,8 @@ export class TweetsComponent implements OnInit {
       this.tweets = tweets;
       console.log(this.tweets);
       this.tweets.forEach(tweet=>{
-        console.log(tweet);
-        this.getTweetCommentsById(tweet.id);
+        this.getTweetCommentsById(tweet.tweetId);
+        //this.getTweetLikesById(tweet.tweetId);
       })
     })
   }
@@ -64,7 +70,7 @@ export class TweetsComponent implements OnInit {
     })
   }
   addComments(tweetId:string){
-    const loginId=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user")).loginId;
+    const currentUser=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user"));
     this.submitted=true;
     if(this.addCommentForm.invalid){
       return;
@@ -73,46 +79,33 @@ export class TweetsComponent implements OnInit {
       tweetId:tweetId,
       comment:this.addCommentForm.value.comments,
       tag:this.addCommentForm.value.tags,
-      username:loginId
+      username:currentUser.loginId,
+      userId:currentUser.userId
     }
     
     this.tweetService.addComment(userComment,userComment.username).subscribe(()=>{
       this.getTweetCommentsById(tweetId);
     });
     this.replyTweet=null;
+    this.addCommentForm.reset();
   }
   
   replytoTweet(tweetId:string){
     this.replyTweet=tweetId;
   }
-  private getTweetById(tweetId : string)
+  getTweetById(tweetId : string)
   {
-    const userId = JSON.parse(localStorage.getItem("user")).userId;
-    this.tweetService.getTweetById(tweetId, userId ).subscribe(data=>
+    
+    this.tweetService.getTweetById(tweetId, this.userId ).subscribe(data=>
     {
         this.tweetResult = data;  
-        
-        this.memberService.getMember(this.tweetResult.userId).subscribe(data=>
+        console.log(this.tweetResult);
+        this.memberService.getUserById(this.tweetResult.appUserId).subscribe(data=>
         {
             this.user = data;
             console.log(this.user);
         });  
-        this.tweetService.getTweetLikesById(tweetId).subscribe(data =>
-        {
-            this.likes = data;
-            console.log(this.likes);
-            var isPresent = this.likes.some(function(el : any){ 
-              return el.userId === userId
-            });
-            if(isPresent == true)
-            {
-              this.liked = true;
-            }
-            else{
-              this.liked = false;
-            }
-            console.log(isPresent);
-        });
+        this.getTweetLikesById(tweetId);
         this.getTweetCommentsById(tweetId);
                                                                                                                                                                                                                                                                    
     });
@@ -140,17 +133,46 @@ export class TweetsComponent implements OnInit {
   }
   toggle(action:string,tweetId:string,likeId?:string){
     const user=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user"));
-    console.log(user);
+    console.log(likeId);
     const userLike={
       tweetId:tweetId,
       userId:user.userId,
       liked:action,
       likeId:likeId,
+      //likesCount:this.liked==false?this.tweets.forEach(tweet=>tweet.likesCount+1):this.tweets.forEach(tweet=>tweet.likesCount-1),
       username:user.loginId
     }
-    this.tweetService.addLike(userLike,userLike.username,userLike.tweetId).subscribe(()=>{
+    this.tweetService.addLike(userLike,userLike.username,userLike.tweetId).subscribe(res=>{
+      console.log(res);
       this.getTweetById(tweetId);
       this.toastr.success("Tweet liked successfully");
     });
+    this.likeTweet=null;
   }
+  reactToTweet(tweetId:string){
+    this.likeTweet=tweetId;
+  }
+  getTweetLikesById(tweetId:string){
+    this.tweetService.getTweetLikesById(tweetId).subscribe(data =>
+      {
+          this.likes = data;
+          console.log(this.likes);
+          var isPresent = this.likes.some(function(el : any){ 
+            return el.userId === this.userId
+          });
+          console.log(this.tweetResult);
+          this.tweets.forEach(tweet=>tweet.likesCount=this.tweetResult.likesCount);
+          if(isPresent == true)
+          {
+            this.liked = true;
+            
+          }
+          else{
+            this.liked = false;
+          }
+          console.log(isPresent);
+      });
+  }
+  
+  
 }

@@ -20,7 +20,7 @@ export class NavComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.currentUser=JSON.parse(localStorage.getItem('user'));
+    this.currentUser=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user"));
   }
   login(loginForm:NgForm){
     console.log(this.model);

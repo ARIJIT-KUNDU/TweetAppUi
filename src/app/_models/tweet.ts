@@ -7,6 +7,6 @@ export interface Tweet{
     appUserId:number;
     replies?:Tweet[]
     tweetId:string;
-    likeId:string;
+    likeId?:string;
     likesCount:number;
 }

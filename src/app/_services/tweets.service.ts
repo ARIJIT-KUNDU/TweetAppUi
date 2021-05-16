@@ -31,7 +31,9 @@ export class TweetsService {
   }
   public getTweetCommentsById(tweetId : string)
   {
-    return this.http.get(this.baseUrl + "tweets/tweetCommentsById/" + tweetId);
+    return this.http.get(this.baseUrl + "tweets/tweetCommentsById/" + tweetId).pipe(
+      map(data1=>data1=JSON.parse(JSON.stringify(data1)))
+    );
   }
   public updateTweet(tweet:any,username:string){
     return this.http.put(this.baseUrl+'tweets/'+username+'/update/'+tweet.id,tweet).pipe(

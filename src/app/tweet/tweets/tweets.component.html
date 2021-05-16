@@ -29,12 +29,13 @@
                         <div class="col-6" *ngIf="member.loginId!==loginId">
                             <div *ngIf="liked">
                                 <button (click)="toggle('unlike',tweet.tweetId,tweet.likeId)" class="btn btn-primary"><i
-                                        class="fas fa-heart"></i></button><span
+                                        class="fa fa-thumbs-o-down"></i></button><span
                                     class="badge badge-secondary badge-pill">{{tweet.likesCount}}</span>
                             </div>
                             <div *ngIf="!liked">
                                 <button (click)="toggle('like',tweet.tweetId)" class="btn btn-primary"><i
-                                        class="fa fa-heart"></i></button><span class="badge badge-secondary badge-pill">{{tweet.likesCount}}</span>
+                                        class="fa fa-thumbs-o-up"></i></button><span
+                                    class="badge badge-secondary badge-pill">{{tweet.likesCount}}</span>
                             </div>
 
                         </div>
@@ -83,7 +84,7 @@
                             <h5 class="ml-2"> {{k.username}}</h5>
                         </div>
                         {{k.comment}}
-                        <p> {{k.createdAt | date :'medium'}}
+                        <p> {{k.createdAt | date :'medium'}}</p>
                     </div>
                 </div>
                 <div *ngIf="displayNoCommentsData == 'false'">
