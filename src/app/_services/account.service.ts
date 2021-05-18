@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import { User } from '../_models/user';
 import { environment } from 'src/environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,7 @@ export class AccountService {
   private currentUserSource=new ReplaySubject<User>(1);
   currentUser$=this.currentUserSource.asObservable();
   
- currentUserLoginId=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user")).userId;
+ currentUserLoginId=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user")).loginId;
   
   constructor(private http:HttpClient) { }
   login(model:any){
@@ -47,4 +48,5 @@ export class AccountService {
     console.log(response);
     return response;
   }
+  
 }

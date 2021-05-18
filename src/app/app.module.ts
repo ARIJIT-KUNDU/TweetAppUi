@@ -13,13 +13,14 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
-import { ListsComponent } from './lists/lists.component';
+
 import { TweetsComponent } from './tweet/tweets/tweets.component';
 import { ToastrModule } from 'ngx-toastr';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { EditTweetComponent } from './tweet/edit-tweet/edit-tweet.component';
+
 
 
 @NgModule({
@@ -30,12 +31,13 @@ import { EditTweetComponent } from './tweet/edit-tweet/edit-tweet.component';
     RegisterComponent,
     MemberListComponent,
     MemberDetailComponent,
-    ListsComponent,
+    
     TweetsComponent,
     MemberCardComponent,
     ProfileComponent,
     ResetPasswordComponent,
-    EditTweetComponent
+    EditTweetComponent,
+    
   ],
   imports: [
     BrowserModule,

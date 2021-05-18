@@ -26,10 +26,11 @@ export class TweetsComponent implements OnInit,OnChanges {
   displayNoCommentsData:string;
   replyMode=false;
   liked:boolean;
-  likes:any=[];
+  likes:any[]=[];
   replyTweet:string;
   likeTweet:string;
   hasComments:any;
+  likedByUser:boolean;
   userId = JSON.parse(localStorage.getItem("user")).userId;
   
   constructor(private memberService: MembersService, private route: ActivatedRoute, private tweetService: TweetsService, private toastr: ToastrService,private fb:FormBuilder,private location:Location) { }
@@ -65,7 +66,7 @@ export class TweetsComponent implements OnInit,OnChanges {
         this.getTweetCommentsById(tweet.tweetId);
         this.getTweetLikesById(tweet.tweetId);
       })
-      console.log(this.comments);
+      
     })
   }
   
@@ -141,7 +142,6 @@ export class TweetsComponent implements OnInit,OnChanges {
   }
   toggle(action:string,tweetId:string,likeId?:string){
     const user=localStorage.getItem("user")==null?"":JSON.parse(localStorage.getItem("user"));
-    //console.log(likeId);
     const userLike={
       tweetId:tweetId,
       userId:user.userId,
@@ -150,10 +150,12 @@ export class TweetsComponent implements OnInit,OnChanges {
       //likesCount:this.liked==false?this.tweets.forEach(tweet=>tweet.likesCount+1):this.tweets.forEach(tweet=>tweet.likesCount-1),
       username:user.loginId
     }
-    this.tweetService.addLike(userLike,userLike.username,userLike.tweetId).subscribe(res=>{
-      //console.log(res);
+    this.tweetService.addLike(userLike,userLike.username,userLike.tweetId).subscribe(()=>{
       this.getTweetById(tweetId);
+      if(action=='like')
       this.toastr.success("Tweet liked successfully");
+      else
+      this.toastr.success("Tweet unliked successfully");
     });
     this.likeTweet=null;
   }
@@ -163,23 +165,15 @@ export class TweetsComponent implements OnInit,OnChanges {
   getTweetLikesById(tweetId:string){
     this.tweetService.getTweetLikesById(tweetId).subscribe(data =>
       {
-          this.likes = data;
-          //console.log(this.likes);
-          
-          //console.log(this.userId);
-          var isPresent=this.likes.find(like=>like.userId==this.userId);
-          this.tweets.forEach(tweet=>tweet.likesCount=this.likes.length);
-          if(isPresent!=undefined)
-          {
-            this.liked = true;
-            
+          this.likes[tweetId] = data;   
+          console.log(this.likes[tweetId]);
+          if(this.likes[tweetId].find(x=>x.userId==this.userId)){
+            this.likedByUser=true;
           }
           else{
-            this.liked = false;
+            this.likedByUser=false;
           }
-          //console.log(isPresent);
+          console.log(this.likedByUser);
       });
   }
-  
-  
 }
