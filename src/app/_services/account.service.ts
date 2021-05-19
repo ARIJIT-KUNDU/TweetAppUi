@@ -43,8 +43,10 @@ export class AccountService {
     )
   }
   resetPassword(model:any){
-    console.log(model);
-    var response= this.http.post(this.baseUrl+'Users/'+this.currentUserLoginId+'/forgot',model).pipe();
+    console.log(this.currentUserLoginId);
+    var response= this.http.post(this.baseUrl+'Users/'+this.currentUserLoginId+'/forgot',model).pipe(
+      map(user=>user=JSON.parse(JSON.stringify(user)))
+    );
     console.log(response);
     return response;
   }
